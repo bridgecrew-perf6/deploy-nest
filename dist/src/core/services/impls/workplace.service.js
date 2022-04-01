@@ -1,0 +1,69 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+var WorkplaceService_1;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.WorkplaceService = void 0;
+const common_1 = require("@nestjs/common");
+const common_constant_1 = require("../../common/constants/common.constant");
+const error_map_1 = require("../../common/error.map");
+const module_config_1 = require("../../config/module.config");
+const response_dto_1 = require("../../dtos/responses/response.dto");
+const base_service_1 = require("./base.service");
+const auto_mapper_util_1 = require("../../utils/auto-mapper/auto-mapper.util");
+const mapper_config_1 = require("../../config/mapper.config");
+let WorkplaceService = WorkplaceService_1 = class WorkplaceService extends base_service_1.BaseService {
+    constructor(_workplaceRepos) {
+        super(_workplaceRepos);
+        this._workplaceRepos = _workplaceRepos;
+        this._logger = new common_1.Logger(WorkplaceService_1.name);
+        this._logger.log("============== Constructor WorkplaceService ==============");
+    }
+    async getWorkplaceList() {
+        this._logger.log("============== Get workplace list ==============");
+        const res = new response_dto_1.ResponseDto();
+        try {
+            const listWorkplace = await this._workplaceRepos.findByCondition({ isActive: true }, { id: common_constant_1.ORDER_BY.ASC });
+            return res.return(error_map_1.ErrorMap.SUCCESSFUL.Code, listWorkplace);
+        }
+        catch (error) {
+            this._logger.error(`${error_map_1.ErrorMap.E500.Code}: ${error_map_1.ErrorMap.E500.Message}`);
+            this._logger.error(`${error.name}: ${error.message}`);
+            this._logger.error(`${error.stack}`);
+            return res.return(error_map_1.ErrorMap.E500.Code);
+        }
+    }
+    async createWorkplace(request) {
+        this._logger.log("============== Create workplace ==============");
+        const res = new response_dto_1.ResponseDto();
+        try {
+            const dataMapper = auto_mapper_util_1.AutoMapperUtil.map(mapper_config_1.MAPPER_CONFIG.CREATE_WORKPLACE_MAPPING, request);
+            dataMapper.isActive = true;
+            const workplace = await this._workplaceRepos.create(dataMapper);
+            return res.return(error_map_1.ErrorMap.SUCCESSFUL.Code, workplace);
+        }
+        catch (error) {
+            this._logger.error(`${error_map_1.ErrorMap.E500.Code}: ${error_map_1.ErrorMap.E500.Message}`);
+            this._logger.error(`${error.name}: ${error.message}`);
+            this._logger.error(`${error.stack}`);
+            return res.return(error_map_1.ErrorMap.E500.Code);
+        }
+    }
+};
+WorkplaceService = WorkplaceService_1 = __decorate([
+    (0, common_1.Injectable)(),
+    __param(0, (0, common_1.Inject)(module_config_1.REPOSITORY_INTERFACE.IWORKPLACE_REPOSITORY)),
+    __metadata("design:paramtypes", [Object])
+], WorkplaceService);
+exports.WorkplaceService = WorkplaceService;
+//# sourceMappingURL=workplace.service.js.map

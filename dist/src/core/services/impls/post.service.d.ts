@@ -1,0 +1,33 @@
+import { ResponseDto } from "../../dtos/responses/response.dto";
+import { BaseService } from "./base.service";
+import { IPostService } from "../ipost.service";
+import { IPostRepository } from "../../repositories/ipost.repository";
+import { CreatePostRequest } from "../../dtos/requests/post/create-post.request";
+import { IPhotoRepository } from "../../repositories/iphoto.repository";
+import { UpdatePostRequest } from "../../dtos/requests/post/update-post.request";
+import { UpdateLikesRequest } from "../../dtos/requests/post/like-post.request";
+import { GetPostListNewsFeedRequest } from "../../dtos/requests/post/get-post-list-news-feed.request";
+import { GetPostListWallRequest } from "../../dtos/requests/post/get-post-list-wall.request";
+import { ICommentRepository } from "../../repositories/icomment.repository";
+import { GetListUsersLikePostRequest } from "../../dtos/requests/post/get-list-users-like-post.request";
+import { IPostLikedUsersRepository } from "../../repositories/ipost-liked-users.repository";
+import { SearchRequest } from "../../dtos/requests/common/search.request";
+export declare class PostService extends BaseService implements IPostService {
+    private _postRepos;
+    private _photoRepos;
+    private _commentRepos;
+    private _postLikedUsersRepos;
+    private readonly _logger;
+    private _commonUtil;
+    constructor(_postRepos: IPostRepository, _photoRepos: IPhotoRepository, _commentRepos: ICommentRepository, _postLikedUsersRepos: IPostLikedUsersRepository);
+    createPost(request: CreatePostRequest): Promise<ResponseDto>;
+    updatePost(id: number, request: UpdatePostRequest): Promise<ResponseDto>;
+    updateLikes(request: UpdateLikesRequest): Promise<ResponseDto>;
+    getPostById(id: number): Promise<ResponseDto>;
+    getPostDetailById(id: number): Promise<ResponseDto>;
+    deletePostById(id: number): Promise<ResponseDto>;
+    getPostListNewsFeed(request: GetPostListNewsFeedRequest): Promise<ResponseDto>;
+    getPostListWall(request: GetPostListWallRequest): Promise<ResponseDto>;
+    getListUsersLikePost(request: GetListUsersLikePostRequest): Promise<ResponseDto>;
+    searchPost(request: SearchRequest): Promise<any>;
+}

@@ -1,0 +1,33 @@
+export declare const CONTROLLER_CONSTANTS: {
+    APP: string;
+    COMMON: string;
+    CITY: string;
+    SCHOOL: string;
+    COLLEGE: string;
+    WORKPLACE: string;
+    USER: string;
+    PROFILE: string;
+    POST: string;
+    PHOTO: string;
+    UPLOAD_FILE: string;
+    COMMENT: string;
+};
+export declare const URL_CONSTANTS: {
+    LOGIN: string;
+    GET_BY_USERNAME: string;
+    GET_BY_ID: string;
+    DELETE: string;
+    GET_DETAIL: string;
+    UPDATE: string;
+    UPDATE_LANGUAGE: string;
+    UPDATE_LIKES: string;
+    GET_POST_LIST_NEWS_FEED: string;
+    GET_POST_LIST_WALL: string;
+    GET_LIST_USERS_LIKE_POST: string;
+    GET_PHOTO_LIST_BY_USER_ID: string;
+    UPLOAD_SINGLE_IMAGE: string;
+    UPLOAD_MULTI_IMAGE: string;
+    UPDATE_AVATAR: string;
+    GET_COMMENT_LIST_BY_POST_ID: string;
+    SEARCH: string;
+};
